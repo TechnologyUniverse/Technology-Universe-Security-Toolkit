@@ -34,3 +34,29 @@ It must NOT be used on production machines or systems containing sensitive data.
 
 ```bash
 spctl --status
+
+📜 License
+
+© 2026 Technology Universe
+All Rights Reserved.
+
+This software and its source code are proprietary.
+
+You may view the source code for informational purposes only.
+
+You may NOT:
+	•	Copy
+	•	Modify
+	•	Redistribute
+	•	Sell
+	•	Repackage
+	•	Create derivative works
+	•	Use commercially
+
+without explicit written permission from Technology Universe.
+
+⸻
+
+🏢 Maintained by
+
+Technology Universe
