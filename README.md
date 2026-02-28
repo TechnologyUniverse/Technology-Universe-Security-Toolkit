@@ -28,13 +28,6 @@ This software is intended ONLY for:
 
 It must NOT be used on production machines or systems containing sensitive data.
 
----
-
-## 🔎 Check Gatekeeper Status
-
-```bash
-spctl --status
-
 📜 License
 
 © 2026 Technology Universe
@@ -60,3 +53,11 @@ without explicit written permission from Technology Universe.
 🏢 Maintained by
 
 Technology Universe
+---
+
+## 🔎 Check Gatekeeper Status
+
+```bash
+spctl --status
+
+e
