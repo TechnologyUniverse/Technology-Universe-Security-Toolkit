@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "🔐 Disabling Gatekeeper..."
+
+spctl --global-disable
+spctl --master-disable 2>/dev/null
+
+STATUS=$(spctl --status)
+
+echo "Gatekeeper status: $STATUS"
+
+exit 0
