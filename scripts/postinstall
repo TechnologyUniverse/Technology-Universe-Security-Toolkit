@@ -1,12 +1,31 @@
 #!/bin/bash
 
-echo "🔐 Disabling Gatekeeper..."
+echo "🔐 Technology Universe Security Toolkit v0.0.2"
+echo "---------------------------------------------"
+
+CURRENT_STATUS=$(spctl --status 2>/dev/null)
+
+echo "Current Gatekeeper Status: $CURRENT_STATUS"
+
+if [[ "$CURRENT_STATUS" == "assessments disabled" ]]; then
+    echo "ℹ️ Gatekeeper is already disabled."
+    exit 0
+fi
+
+echo "⏳ Disabling Gatekeeper..."
 
 spctl --global-disable
 spctl --master-disable 2>/dev/null
 
-STATUS=$(spctl --status)
+NEW_STATUS=$(spctl --status 2>/dev/null)
 
-echo "Gatekeeper status: $STATUS"
+echo "---------------------------------------------"
+echo "New Gatekeeper Status: $NEW_STATUS"
+
+if [[ "$NEW_STATUS" == "assessments disabled" ]]; then
+    echo "✅ Gatekeeper successfully disabled."
+else
+    echo "⚠️ Warning: Gatekeeper may still be active."
+fi
 
 exit 0
