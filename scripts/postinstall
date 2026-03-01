@@ -1,31 +1,43 @@
 #!/bin/bash
 
-echo "🔐 Technology Universe Security Toolkit v0.0.2"
+LOG_FILE="/var/log/tu-security-toolkit.log"
+TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
+
+log() {
+    echo "[$TIMESTAMP] $1" | tee -a "$LOG_FILE"
+}
+
+echo "🔐 Technology Universe Security Toolkit v0.0.3"
 echo "---------------------------------------------"
+
+# Проверка root
+if [[ $EUID -ne 0 ]]; then
+    echo "❌ This installer must be run as root."
+    exit 1
+fi
 
 CURRENT_STATUS=$(spctl --status 2>/dev/null)
 
-echo "Current Gatekeeper Status: $CURRENT_STATUS"
+log "Current Gatekeeper Status: $CURRENT_STATUS"
 
 if [[ "$CURRENT_STATUS" == "assessments disabled" ]]; then
-    echo "ℹ️ Gatekeeper is already disabled."
+    log "Gatekeeper already disabled. No action required."
     exit 0
 fi
 
-echo "⏳ Disabling Gatekeeper..."
+log "Attempting to disable Gatekeeper..."
 
 spctl --global-disable
 spctl --master-disable 2>/dev/null
 
 NEW_STATUS=$(spctl --status 2>/dev/null)
 
-echo "---------------------------------------------"
-echo "New Gatekeeper Status: $NEW_STATUS"
+log "New Gatekeeper Status: $NEW_STATUS"
 
 if [[ "$NEW_STATUS" == "assessments disabled" ]]; then
-    echo "✅ Gatekeeper successfully disabled."
+    log "SUCCESS: Gatekeeper successfully disabled."
+    exit 0
 else
-    echo "⚠️ Warning: Gatekeeper may still be active."
+    log "ERROR: Gatekeeper may still be active."
+    exit 2
 fi
-
-exit 0
